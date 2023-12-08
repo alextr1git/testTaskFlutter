@@ -1,16 +1,8 @@
 # test_task_flutter
 
-A new Flutter project.
+Flutter project based on the test task.
+Provides information about users, which it get from API using Dio and Retrofit.
+App supports multiple states, like: data loading, data is loaded, errors occured, app is offline, using Bloc.
+Also, to prevent empty screen when user don't have internet connection, users info is cached at local storage using Hive.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Stack: Clean, bloc, dio, retrofit, hive.
