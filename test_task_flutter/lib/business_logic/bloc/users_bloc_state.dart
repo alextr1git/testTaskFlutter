@@ -12,6 +12,8 @@ final class UsersBlocFailure extends UsersBlocState {
   UsersBlocFailure(this.error);
 }
 
+final class UsersBlocOffline extends UsersBlocState {}
+
 final class UsersBlocLoaded extends UsersBlocState {
   final List<UserModel> users;
   UsersBlocLoaded(this.users);

@@ -25,8 +25,7 @@ class HomePage extends StatelessWidget {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              }
-              if (state is UsersBlocLoaded) {
+              } else if (state is UsersBlocLoaded) {
                 List<UserModel> usersList = state.users;
                 return UsersListView(
                     users: usersList,
@@ -34,10 +33,13 @@ class HomePage extends StatelessWidget {
                       Navigator.of(context)
                           .pushNamed(userDetailsRoute, arguments: user);
                     });
-              }
-              if (state is UsersBlocFailure) {
+              } else if (state is UsersBlocFailure) {
                 return Center(
-                  child: Text("Something went wrong!"),
+                  child: Text("Something went wrong."),
+                );
+              } else if (state is UsersBlocOffline) {
+                return Center(
+                  child: Text("No connection!"),
                 );
               }
               return Container();
