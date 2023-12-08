@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:test_task_flutter/data/models/user_model.dart';
 import 'package:test_task_flutter/data/repositories/users_repository.dart';
@@ -17,11 +20,17 @@ class UsersBlocBloc extends Bloc<UsersBlocEvent, UsersBlocState> {
         var connectivityResult = await Connectivity().checkConnectivity();
         if (connectivityResult == ConnectivityResult.wifi ||
             connectivityResult == ConnectivityResult.mobile) {
-          final users = await _usersRepository.getUsers();
-          emit(UsersBlocLoaded(users));
+          final serverResponse = await _usersRepository.getUsers();
+          await _usersRepository.cacheUsers(users: serverResponse);
+          final cachedUsers = await _usersRepository.fetchAllCachedUsers();
+          emit(UsersBlocLoaded(cachedUsers));
         } else {
-          emit(UsersBlocOffline());
+          final cachedUsers = await _usersRepository.fetchAllCachedUsers();
+          emit(UsersBlocOffline(cachedUsers));
         }
+      } on DioException catch (_) {
+        final cachedUsers = await _usersRepository.fetchAllCachedUsers();
+        emit(UsersBlocOffline(cachedUsers));
       } catch (e) {
         emit(UsersBlocFailure(e.toString()));
       }

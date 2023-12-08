@@ -35,11 +35,33 @@ class HomePage extends StatelessWidget {
                     });
               } else if (state is UsersBlocFailure) {
                 return Center(
-                  child: Text("Something went wrong."),
+                  child: Text(state.error),
                 );
               } else if (state is UsersBlocOffline) {
-                return Center(
-                  child: Text("No connection!"),
+                List<UserModel> usersList = state.users;
+                return Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 5),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text(
+                        "You are offline",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 5,
+                      child: UsersListView(
+                          users: usersList,
+                          onTap: (user) {
+                            Navigator.of(context)
+                                .pushNamed(userDetailsRoute, arguments: user);
+                          }),
+                    ),
+                  ],
                 );
               }
               return Container();
