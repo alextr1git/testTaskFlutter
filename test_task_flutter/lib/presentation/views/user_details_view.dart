@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_task_flutter/data/models/user_model.dart';
-import 'package:test_task_flutter/utilities/get_arguments.dart';
+import 'package:test_task_flutter/presentation/utilities/get_arguments.dart';
+import 'package:test_task_flutter/presentation/widgets/details_holder.dart';
 
 class UserDetailsView extends StatefulWidget {
   const UserDetailsView({super.key});
@@ -51,48 +52,6 @@ class _UserDetailsViewState extends State<UserDetailsView> {
             _phoneNumber,
             _company,
           )),
-    );
-  }
-
-  Widget detailHolder(
-    String name,
-    String email,
-    Map<String, dynamic> address,
-    String phoneNumber,
-    Map<String, String> company,
-  ) {
-    return Column(
-      children: [
-        columnCell("Name", name),
-        columnCell("Email", email),
-        columnCell("Address",
-            '${address["city"]}, ${address["street"]}, ${address["suite"]}, ${address["zipcode"]}'),
-        columnCell("Phone", phoneNumber),
-        columnCell("Company", company["name"]),
-      ],
-    );
-  }
-
-  Widget columnCell(title, value) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Text(value),
-          ],
-        ),
-        const SizedBox(
-          height: 10.0,
-        ),
-      ],
     );
   }
 }

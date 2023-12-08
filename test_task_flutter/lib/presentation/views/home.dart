@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_task_flutter/business_logic/bloc/users_bloc_bloc.dart';
-import 'package:test_task_flutter/constants/routes.dart';
+import 'package:test_task_flutter/presentation/constants/routes.dart';
 import 'package:test_task_flutter/data/models/user_model.dart';
 import 'package:test_task_flutter/data/repositories/users_repository.dart';
-import 'package:test_task_flutter/presentation/views/users_list_view.dart';
+import 'package:test_task_flutter/presentation/widgets/users_list_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
