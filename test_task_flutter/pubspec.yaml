@@ -38,6 +38,10 @@ dependencies:
   dio: ^5.4.0
   retrofit: ^4.0.3
   json_annotation: ^4.8.1
+  hive_flutter: ^1.1.0
+  hive_generator: ^2.0.1
+  bloc: ^8.1.2
+  flutter_bloc: ^8.1.3
 
 dev_dependencies:
   flutter_test:

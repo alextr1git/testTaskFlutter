@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:test_task_flutter/models/user_model.dart';
+import 'package:test_task_flutter/data/models/user_model.dart';
 
 part 'api_service.g.dart';
 

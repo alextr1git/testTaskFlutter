@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_task_flutter/models/user_model.dart';
+import 'package:test_task_flutter/data/models/user_model.dart';
 
 typedef UserCallback = void Function(UserModel user);
 
