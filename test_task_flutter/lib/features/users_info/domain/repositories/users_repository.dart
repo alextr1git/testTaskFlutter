@@ -2,11 +2,11 @@
 import 'package:test_task_flutter/features/users_info/domain/models/user_model.dart';
 
 abstract class UsersRepository {
-  getUsers();
+  Future<List<UserModel>>  getUsers();
 
   Future<void> saveUsers({
-    required List<UserModel> userModels,
+    required List<UserModel> userModelsList,
   });
 
-  getAllCachedUsers();
+    Future<List<UserModel>>  getAllCachedUsers();
 }

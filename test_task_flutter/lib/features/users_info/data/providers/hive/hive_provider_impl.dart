@@ -8,19 +8,19 @@ class HiveProviderImpl implements HiveProvider {
   HiveProviderImpl({required Box<UserEntityLocal> usersBox}) : _usersBox = usersBox;
   @override
   Future<void> cacheUsers({
-    required List<UserEntityLocal> users,
+    required List<UserEntityLocal> userEntitiesList,
   }) async {
-    for (final user in users) {
+    for (final userLocal in userEntitiesList) {
       await _usersBox.put(
-        user.id,
-        user,
+        userLocal.id,
+        userLocal,
       );
     }
   }
 
   @override
   Future<List<UserEntityLocal>> fetchAllCachedUsers() async {
-    final cachedUsers = _usersBox.values.toList();
+    final List<UserEntityLocal> cachedUsers = _usersBox.values.toList();
     return cachedUsers;
   }
   

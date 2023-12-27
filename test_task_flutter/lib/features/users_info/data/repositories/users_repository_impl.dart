@@ -2,48 +2,42 @@ import 'package:test_task_flutter/features/users_info/data/Entities/api/user_ent
 import 'package:test_task_flutter/features/users_info/data/Entities/local/user_model_local.dart';
 import 'package:test_task_flutter/features/users_info/data/mapper.dart';
 import 'package:test_task_flutter/features/users_info/data/providers/api/api_service.dart';
-import 'package:test_task_flutter/features/users_info/data/providers/hive/hive_provider_impl.dart';
+import 'package:test_task_flutter/features/users_info/data/providers/hive/hive_provider.dart';
 import 'package:test_task_flutter/features/users_info/domain/models/user_model.dart';
 import 'package:test_task_flutter/features/users_info/domain/repositories/users_repository.dart';
 
 class UsersRepositoryImpl implements UsersRepository {
   final ApiService _apiProvider;
-  final HiveProviderImpl _hiveProvider;
+  final HiveProvider _hiveProvider;
 
   UsersRepositoryImpl({
-    required HiveProviderImpl hiveProvider,
+    required HiveProvider hiveProvider,
     required ApiService apiProvider,
   })  : _hiveProvider = hiveProvider,
         _apiProvider = apiProvider;
 
 //-----------API-------------
   Future<List<UserModel>> getUsers() async {
-    List<UserEntityApi> entitiesList = await _apiProvider.getUsers();
-    List<UserModel> modelsList = [];
-    for (var entity in entitiesList) {
-      modelsList.add(UserMapper.toModel(entity));
-    }
-    return modelsList;
+    List<UserEntityApi> userEntitiesList = await _apiProvider.getUsers();
+    List<UserModel> userModelsList =
+        userEntitiesList.map((e) => UserMapper.toModel(e)).toList();
+    return userModelsList;
   }
 
 //-----------Local-------------
-  Future<void> saveUsers({
-    required List<UserModel> userModels,
-  }) async {
-    List<UserEntityLocal> entitiesList = [];
-    for (var user in userModels) {
-      entitiesList.add(UserMapper.toEntity(user));
-    }
-    _hiveProvider.cacheUsers(users: entitiesList);
+  Future<List<UserModel>> getAllCachedUsers() async {
+    List<UserEntityLocal> userEntitiesList =
+        await _hiveProvider.fetchAllCachedUsers();
+    List<UserModel> userModelsList =
+        userEntitiesList.map((e) => UserMapper.toModel(e)).toList();
+    return userModelsList;
   }
 
-  Future<List<UserModel>> getAllCachedUsers() async {
-    List<UserEntityLocal> entitiesList =
-        await _hiveProvider.fetchAllCachedUsers();
-    List<UserModel> modelsList = [];
-    for (var entity in entitiesList) {
-      modelsList.add(UserMapper.toModel(entity));
-    }
-    return modelsList;
+  Future<void> saveUsers({
+    required List<UserModel> userModelsList,
+  }) async {
+    List<UserEntityLocal> userEntitiesList =
+        userModelsList.map((e) => UserMapper.toEntity(e)).toList();
+    _hiveProvider.cacheUsers(userEntitiesList: userEntitiesList);
   }
 }
